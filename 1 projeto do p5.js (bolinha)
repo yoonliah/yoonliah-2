@@ -1,0 +1,80 @@
+//Atividade - localizar os erros e fazer 3 alterações no jogo. Por exemplo: velocidade, cor, tamanho.
+//fazer uma cópia antes de iniciar a atividade
+//localizar, corrigir e explicar o erro.
+//Responda: quais foram os erros? Quais foram as alterações realizadas?
+//Reposta da linha 3 :na linha 6 e 38 estava com a letra "b" minuscula  
+//Resposta da linha 4: alteração a cor na linha 37,56,26,36 e 31,mudeu todas a cores do jogo 
+let xBolinha = 300;
+let yBolinha = 200;
+let diametro = 30;
+let velocidadeXBolinha = 6;
+let velocidadeYBolinha = 6;
+
+//Variáveis da raquete
+let xRaquete = 5;
+let yRaquete = 150;
+let larguraRaquete = 10;
+let alturaRaquete = 90;
+
+let colidiu = false;
+
+function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background('#00BCD4');
+  mostraBolinha();
+  movimentaBolinha();
+  verificaColisaoBorda();
+  mostraRaquete();
+  movimentaRaquete(1);
+  movimentaMouse();
+  colisaoMinhaRaquete(1) ;
+}
+
+function mostraBolinha() {
+  fill('');
+  circle(xBolinha, yBolinha, diametro);
+}
+
+function movimentaBolinha() {
+  xBolinha += velocidadeXBolinha;
+  yBolinha += velocidadeYBolinha;
+}
+
+function verificaColisaoBorda() {
+  if(xBolinha > width || xBolinha < 0) {
+    velocidadeXBolinha *= -1;
+  }
+  if(yBolinha > height || yBolinha < 0) {
+    velocidadeYBolinha *= -1;
+  }
+}
+
+function mostraRaquete() {
+  fill(''); //muda a cor da raquete
+  rect(xRaquete, yRaquete, larguraRaquete, alturaRaquete);
+}
+
+function movimentaRaquete() {
+  if(keyIsDown(87)) {
+    yRaquete -= 10;
+  }
+  if(keyIsDown(83)) {
+    yRaquete += 10;
+  }
+}
+
+function movimentaMouse() {
+  if(mouseIsPressed) {
+    yRaquete = mouseY;
+  }
+}
+
+function colisaoMinhaRaquete() {
+   colidiu = collideRectCircle(xRaquete, yRaquete, larguraRaquete, alturaRaquete, xBolinha, yBolinha, diametro);
+  if(colidiu) {
+    velocidadeXBolinha *= -1;  
+  }
+} 
